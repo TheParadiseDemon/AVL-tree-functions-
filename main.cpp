@@ -1,6 +1,4 @@
 #include <bits/stdc++.h>
-#include <cmath>
-
 
 bool CHANGED_BALANCE; //Проверка на изменение баланса при удалении
 struct Room{
