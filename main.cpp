@@ -287,6 +287,30 @@ TNode* DeleteFromTree(TNode* root, char let, int num){
     return root;
 }
 
+void ToStack(TNode* a, std::stack<std::pair<char, int>>* &astack){
+    if (a != nullptr){
+        ToStack(a->left, astack);
+        astack->push(std::make_pair(GetRoomLetter(a), GetRoomNumber(a)));
+        ToStack(a->right, astack);
+    }
+
+}
+
+bool AreEqual(TNode* a, TNode* b){
+    if (a == nullptr && b == nullptr) return true;
+    if (a == nullptr ^ b == nullptr) return false;
+    auto* astack = new std::stack<std::pair<char, int>>;
+    auto* bstack = new std::stack<std::pair<char, int>>;
+    ToStack(a, astack);
+    ToStack(b, bstack);
+    while (!astack->empty() && !bstack->empty()){
+        if ((astack->top().first != bstack->top().first) || ((astack->top().second != bstack->top().second))) return false;
+        astack->pop();
+        bstack->pop();
+    }
+    return AreEqual(a->left, b->left)&&(AreEqual(a->right, b->right));
+}
+
 void DeleteTree(TNode* node){
     if (node != nullptr) {
         if (node->left)
